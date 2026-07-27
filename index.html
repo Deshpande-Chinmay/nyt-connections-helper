@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NYT Connections Helper</title>
+  <meta name="description" content="View today's New York Times Connections puzzle words. Color-code each tile to plan your strategy — updated daily." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <img src="logo.png" alt="Connections Helper logo" class="logo-icon" />
+        <div>
+          <h1 class="site-title">Connections Helper</h1>
+          <p class="site-tagline">Not affiliated with The New York Times</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="date-badge" id="dateBadge">Loading…</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Loading State -->
+    <div class="loader-container" id="loaderContainer">
+      <div class="loader-ring"></div>
+      <p class="loader-text">Fetching today's puzzle…</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-container" id="errorContainer" style="display:none;">
+      <div class="error-icon">⚠️</div>
+      <h2 class="error-title">Couldn't load today's puzzle</h2>
+      <p class="error-msg" id="errorMsg">This may be due to a CORS restriction or the puzzle not being published yet.</p>
+      <button class="btn-retry" id="retryBtn">Try Again</button>
+      <button class="btn-demo" id="demoBtn">Load Demo Puzzle</button>
+    </div>
+
+    <!-- Puzzle Area -->
+    <div class="puzzle-area" id="puzzleArea" style="display:none;">
+
+      <!-- Controls (centered) -->
+      <div class="controls-wrap">
+        <div class="instructions">
+          <p>🖱 Click to color &nbsp;·&nbsp; Drag freely, tiles snap to grid &nbsp;·&nbsp; Right-click to clear</p>
+        </div>
+
+        <!-- Color Legend -->
+        <div class="legend" id="legend">
+          <div class="legend-item"><span class="legend-dot dot-white"></span><span>Grey</span></div>
+          <div class="legend-item"><span class="legend-dot dot-yellow"></span><span>Yellow</span></div>
+          <div class="legend-item"><span class="legend-dot dot-green"></span><span>Green</span></div>
+          <div class="legend-item"><span class="legend-dot dot-blue"></span><span>Blue</span></div>
+          <div class="legend-item"><span class="legend-dot dot-purple"></span><span>Purple</span></div>
+        </div>
+
+        <!-- Color Picker Toolbar -->
+        <div class="toolbar" id="toolbar">
+          <span class="toolbar-label">Active Color:</span>
+          <div class="color-swatches">
+            <button class="swatch swatch-white active" id="sw-white"  data-color="white"  aria-label="White / Clear" title="White (unset)">W</button>
+            <button class="swatch swatch-yellow"      id="sw-yellow" data-color="yellow" aria-label="Yellow"         title="Yellow">Y</button>
+            <button class="swatch swatch-green"       id="sw-green"  data-color="green"  aria-label="Green"          title="Green">G</button>
+            <button class="swatch swatch-blue"        id="sw-blue"   data-color="blue"   aria-label="Blue"           title="Blue">B</button>
+            <button class="swatch swatch-purple"      id="sw-purple" data-color="purple" aria-label="Purple"         title="Purple">P</button>
+          </div>
+          <button class="btn-reset-all" id="resetAll"   title="Reset all tile colors">↺ Colors</button>
+          <button class="btn-reset-all" id="resetOrder" title="Restore original tile order">⤢ Order</button>
+        </div>
+      </div>
+
+      <!-- Full-width 6×4 slot grid (slots filled by JS) -->
+      <div class="tile-grid" id="tileGrid" role="grid" aria-label="Connections puzzle tiles"></div>
+
+    </div>
+  </main>
+
+
+
+  <script src="app.js"></script>
+</body>
+</html>

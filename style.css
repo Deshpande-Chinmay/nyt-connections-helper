@@ -1,0 +1,429 @@
+/* ===========================
+   CSS Reset & Base
+   =========================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font: 'Inter', system-ui, sans-serif;
+
+  /* Background */
+  --bg: #000;
+  --surface: rgba(255,255,255,0.04);
+  --border:  rgba(255,255,255,0.08);
+
+  /* Tile colors */
+  --tile-white:        #1e1e2e;
+  --tile-white-text:   #c8c8e0;
+  --tile-yellow:       #e8a11e;
+  --tile-yellow-text:  #1a1200;
+  --tile-green:        #22c55e;
+  --tile-green-text:   #001a0b;
+  --tile-blue:         #3b82f6;
+  --tile-blue-text:    #001030;
+  --tile-purple:       #a855f7;
+  --tile-purple-text:  #1a0030;
+
+  /* Accents */
+  --accent:   #7c3aed;
+  --accent-2: #06b6d4;
+
+  --radius:       16px;
+  --tile-radius:  12px;
+  --transition:   0.22s cubic-bezier(.4,0,.2,1);
+
+  /* Grid dimensions */
+  --grid-cols: 6;
+  --grid-gap:  12px;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: #e2e2f0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ===========================
+   Background orbs
+   =========================== */
+.bg-orbs { display: none; }
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+}
+.orb-1 {
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, #7c3aed, transparent 70%);
+  top: -160px; left: -120px;
+}
+.orb-2 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, #06b6d4, transparent 70%);
+  bottom: -100px; right: -80px;
+}
+.orb-3 { display: none; }
+
+/* ===========================
+   Header
+   =========================== */
+.site-header {
+  position: relative;
+  z-index: 10;
+  padding: 0 24px;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,10,0.85);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.site-title {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+  line-height: 1;
+}
+.site-tagline {
+  font-size: 0.62rem;
+  color: #4b5563;
+  font-weight: 400;
+  margin-top: 2px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.puzzle-num-badge,
+.date-badge {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.puzzle-num-badge:empty { display: none; }
+
+/* ===========================
+   Main content
+   =========================== */
+.main-content {
+  position: relative;
+  z-index: 5;
+  padding: 12px 0 0;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Controls wrap — keep toolbar & info centered */
+.controls-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Puzzle area stretches to fill remaining space */
+.puzzle-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ===========================
+   Loader
+   =========================== */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 80px 0;
+}
+.loader-ring {
+  width: 52px; height: 52px;
+  border: 3px solid rgba(124,58,237,0.2);
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-text { color: #6b7280; font-size: 0.9rem; font-weight: 500; }
+
+/* ===========================
+   Error State
+   =========================== */
+.error-container {
+  text-align: center;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.error-icon { font-size: 3rem; }
+.error-title { font-size: 1.3rem; font-weight: 700; }
+.error-msg { color: #9ca3af; font-size: 0.88rem; max-width: 380px; line-height: 1.6; }
+.btn-retry, .btn-demo {
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: none;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-retry {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.4);
+}
+.btn-retry:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,58,237,0.5); }
+.btn-demo {
+  background: var(--surface);
+  color: #c4b5fd;
+  border: 1px solid var(--border);
+}
+.btn-demo:hover { background: rgba(124,58,237,0.12); }
+
+/* ===========================
+   Instructions
+   =========================== */
+.instructions {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.instructions p {
+  font-size: 0.82rem;
+  color: #6b7280;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+/* ===========================
+   Legend
+   =========================== */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+.legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-white  { background: var(--tile-white); border: 1px solid rgba(255,255,255,0.2); }
+.dot-yellow { background: var(--tile-yellow); }
+.dot-green  { background: var(--tile-green); }
+.dot-blue   { background: var(--tile-blue); }
+.dot-purple { background: var(--tile-purple); }
+
+/* ===========================
+   Toolbar
+   =========================== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 20px;
+  backdrop-filter: blur(10px);
+}
+.toolbar-label {
+  font-size: 0.78rem;
+  color: #6b7280;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.color-swatches { display: flex; gap: 8px; }
+.swatch {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  font-family: var(--font);
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all var(--transition);
+  outline: none;
+  letter-spacing: 0;
+}
+.swatch:hover  { transform: scale(1.15); }
+.swatch.active { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.25), 0 4px 16px rgba(0,0,0,0.4); transform: scale(1.12); }
+
+.swatch-white  { background: var(--tile-white);  color: var(--tile-white-text);  border-color: rgba(255,255,255,0.2); }
+.swatch-yellow { background: var(--tile-yellow); color: var(--tile-yellow-text); }
+.swatch-green  { background: var(--tile-green);  color: var(--tile-green-text); }
+.swatch-blue   { background: var(--tile-blue);   color: var(--tile-blue-text); }
+.swatch-purple { background: var(--tile-purple); color: var(--tile-purple-text); }
+
+.swatch-white.active  { border-color: rgba(255,255,255,0.6); }
+.swatch-yellow.active { border-color: #fff5cc; }
+.swatch-green.active  { border-color: #bbf7d0; }
+.swatch-blue.active   { border-color: #bfdbfe; }
+.swatch-purple.active { border-color: #e9d5ff; }
+
+.btn-reset-all {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #9ca3af;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.btn-reset-all:hover {
+  border-color: rgba(239,68,68,0.5);
+  color: #f87171;
+  background: rgba(239,68,68,0.08);
+}
+
+/* ===========================
+   Full-width Slot Grid
+   =========================== */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding: 0 8px 8px;
+  margin: 0;
+}
+
+.slot {
+  border-radius: var(--tile-radius);
+  position: relative;
+  background: transparent;
+  transition: background 0.15s ease;
+  min-height: 0;
+}
+
+/* Drop-target highlight — plain fill, no border or glow */
+.slot.drag-over {
+  background: rgba(255,255,255,0.06) !important;
+}
+
+/* ── Tile — lives inside a slot ── */
+.tile {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--tile-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 6px;
+  font-size: clamp(0.58rem, 1.5vw, 0.82rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: grab;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+/* Word text */
+.tile-word {
+  display: block;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+/* ── Tile color states ── */
+.tile.color-white  { background: var(--tile-white);  color: #fff; }
+.tile.color-yellow { background: var(--tile-yellow); color: #fff; }
+.tile.color-green  { background: var(--tile-green);  color: #fff; }
+.tile.color-blue   { background: var(--tile-blue);   color: #fff; }
+.tile.color-purple { background: var(--tile-purple); color: #fff; }
+
+/* ── Drag ghost ── */
+.drag-ghost {
+  border-radius: var(--tile-radius);
+  cursor: grabbing !important;
+  user-select: none;
+}
+
+
+
+
+/* ===========================
+   Responsive
+   =========================== */
+@media (max-width: 700px) {
+  :root { --grid-cols: 4; }
+  .tile-grid { grid-template-columns: repeat(4, 1fr); }
+  .header-inner { height: 60px; }
+  .logo-icon { width: 36px; height: 36px; font-size: 1.1rem; }
+  .site-title { font-size: 1rem; }
+  .toolbar { padding: 8px 14px; gap: 8px; }
+  .swatch { width: 30px; height: 30px; font-size: 0.6rem; }
+}
+@media (max-width: 420px) {
+  .tile { font-size: 0.55rem; }
+}
