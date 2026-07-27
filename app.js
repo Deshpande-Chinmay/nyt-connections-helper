@@ -4,13 +4,16 @@
    ============================================================ */
 
 // ── Grid constants ─────────────────────────────────────────
-const GRID_COLS   = 8;
 const GRID_ROWS   = 4;
-const TOTAL_SLOTS = GRID_COLS * GRID_ROWS; // 32
+const IS_MOBILE   = window.innerWidth <= 700;
+const GRID_COLS   = IS_MOBILE ? 4 : 8;
+const TOTAL_SLOTS = GRID_COLS * GRID_ROWS;
 
 // ── Other constants ────────────────────────────────────────
 const COLOR_CYCLE = ['white', 'yellow', 'green', 'blue', 'purple'];
-const STORAGE_KEY = 'nyt_connections_tiles_v3';
+const STORAGE_KEY = IS_MOBILE
+  ? 'nyt_connections_tiles_mobile_v1'
+  : 'nyt_connections_tiles_v3';
 
 // ── Demo puzzle ────────────────────────────────────────────
 const DEMO_PUZZLE = {
@@ -85,13 +88,15 @@ function formatDate(ds) {
 }
 
 // ── Default slot map ───────────────────────────────────────
-// Places tiles in the inner 4 columns (cols 2-5 of 0-7), 2 empty cols each side.
+// Mobile: all 4 cols used (0-3). Desktop: centre cols 2-5 of 8.
 function getDefaultSlotMap(sortedPositions) {
   const map = {};
   for (let i = 0; i < TOTAL_SLOTS; i++) map[i] = null;
   let ti = 0;
+  const colStart = IS_MOBILE ? 0 : 2;
+  const colEnd   = IS_MOBILE ? 3 : 5;
   for (let row = 0; row < GRID_ROWS; row++) {
-    for (let col = 2; col <= 5; col++) {
+    for (let col = colStart; col <= colEnd; col++) {
       if (ti < sortedPositions.length) {
         map[row * GRID_COLS + col] = sortedPositions[ti++];
       }
@@ -154,10 +159,12 @@ resetOrderBtn.addEventListener('click', () => {
     s.classList.remove('occupied');
   });
 
-  // Re-place in default pattern (inner 4 cols)
+  // Re-place in default pattern
+  const colStart = IS_MOBILE ? 0 : 2;
+  const colEnd   = IS_MOBILE ? 3 : 5;
   let ti = 0;
   for (let row = 0; row < GRID_ROWS; row++) {
-    for (let col = 2; col <= 5; col++) {
+    for (let col = colStart; col <= colEnd; col++) {
       const slot = document.querySelector(`.slot[data-slot="${row * GRID_COLS + col}"]`);
       if (slot && tiles[ti]) {
         slot.appendChild(tiles[ti]);

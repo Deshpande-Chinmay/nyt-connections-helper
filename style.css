@@ -413,17 +413,93 @@ body {
 
 
 /* ===========================
-   Responsive
+   Responsive — Mobile
    =========================== */
 @media (max-width: 700px) {
-  :root { --grid-cols: 4; }
-  .tile-grid { grid-template-columns: repeat(4, 1fr); }
-  .header-inner { height: 60px; }
-  .logo-icon { width: 36px; height: 36px; font-size: 1.1rem; }
-  .site-title { font-size: 1rem; }
-  .toolbar { padding: 8px 14px; gap: 8px; }
-  .swatch { width: 30px; height: 30px; font-size: 0.6rem; }
+
+  /* Allow page to scroll on mobile */
+  html {
+    height: auto;
+    overflow: auto;
+  }
+  body {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+
+  /* Header */
+  .header-inner { height: 52px; gap: 8px; }
+  .logo-area    { gap: 10px; }
+  .logo-icon    { width: 28px; height: 28px; }
+  .site-title   { font-size: 0.9rem; }
+  .site-tagline { font-size: 0.55rem; }
+  .date-badge   { font-size: 0.65rem; padding: 3px 8px; }
+
+  /* Main content — stop being a flex-stretch child */
+  .main-content {
+    flex: unset;
+    overflow: visible;
+    padding: 10px 0 16px;
+  }
+
+  /* Puzzle area — stop stretching */
+  .puzzle-area {
+    flex: unset;
+    min-height: unset;
+  }
+
+  /* Controls */
+  .controls-wrap { padding: 0 10px; }
+  .instructions p {
+    font-size: 0.72rem;
+    padding: 6px 12px;
+  }
+  .legend        { gap: 8px; margin-bottom: 8px; }
+  .legend-item   { font-size: 0.7rem; }
+  .legend-dot    { width: 10px; height: 10px; }
+
+  /* Toolbar */
+  .toolbar {
+    padding: 6px 12px;
+    gap: 8px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    flex-wrap: wrap;
+  }
+  .toolbar-label { font-size: 0.7rem; }
+  .swatch        { width: 28px; height: 28px; font-size: 0.58rem; border-width: 2px; }
+  .btn-reset-all { padding: 5px 10px; font-size: 0.68rem; }
+
+  /* Grid — 4 cols, auto height rows, full width */
+  .tile-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: unset;      /* auto-sized rows */
+    flex: unset;
+    min-height: unset;
+    width: calc(100vw - 16px);
+    margin: 0 auto;
+    padding: 0 0 8px;
+    gap: 6px;
+  }
+
+  /* Slots get their aspect-ratio back on mobile */
+  .slot {
+    aspect-ratio: 1.6 / 1;
+    min-height: unset;
+  }
+
+  /* Tiles */
+  .tile {
+    font-size: 0.6rem;
+    border-radius: 8px;
+    padding: 0 6px;
+    touch-action: none; /* essential: stops browser stealing touch for scroll */
+  }
 }
+
 @media (max-width: 420px) {
-  .tile { font-size: 0.55rem; }
+  .tile        { font-size: 0.52rem; }
+  .swatch      { width: 24px; height: 24px; }
+  .site-title  { font-size: 0.8rem; }
 }
