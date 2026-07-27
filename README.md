@@ -5,7 +5,7 @@ A simple visualizer for NYT Connections players to map out word categories witho
 **[Website Hosted on Vercel](https://nyt-connections-helper.vercel.app/)**
 
 ## Features
-* **Interactive Grid:** Move word tiles on the grid to visualise grouped and make groups before finalizing in-game.
+* **Interactive Grid:** Move word tiles on the grid to try different groups, before finalizing in-game.
 * **Category Color-Coding:** Give each tile NYT Connections based colours and group them together.
 * **Edge Proxy Routing:** Uses a Cloudflare Worker proxy (`proxy-worker.js`) to cache grid data and load puzzles faster.
 
