@@ -5,7 +5,7 @@ An interactive NYT Connections helper designed to optimize puzzle solving and ma
 🔗 **[Website Hosted on Vercel](https://nyt-connections-helper.vercel.app/)**
 
 ## 🚀 Overview
-As an incoming college student and regular NYT Connections player, I wanted to build a tool that helps users visualize word relationships & groups without ruining their in-game streaks. This project was built using AI-assisted development with Anthropic's Claude.
+As a soon-to-be college student and regular NYT Connections player, I built a tool that helps users visualize word relationships and groups without ruining their in-game streaks like zero mistakes and reverse rainbows. This project was built using AI-assistance with Anthropic's Claude.
 
 ## ✨ Features
 * **Interactive Grid:** Move word tiles on the grid to visualise grouped words easily & solve puzzles faster.
