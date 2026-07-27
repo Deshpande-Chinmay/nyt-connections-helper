@@ -11,6 +11,7 @@ As an incoming college student and regular NYT Connections player, I wanted to b
 * **Interactive Grid:** Move word tiles on the grid to visualise grouped words easily & solve puzzles faster.
 * **Category Coloring:** Give each tile NYT Connections based colours & group them together.
 * **Responsive Design:** Elements react promptly ensuring a smooth user experience throughout solving.
+* **Edge Proxy Routing:** Implemented a Cloudflare Worker proxy (`proxy-worker.js`) to cache and optimize API responses, reducing latency for faster grid data loading.
 
 ## 🛠️ Tech Stack
 * **Frontend:** Vanilla Javascript (ES6+), HTML5, CSS3
@@ -21,6 +22,6 @@ As an incoming college student and regular NYT Connections player, I wanted to b
 * **Code Review & Refactoring:** Debugging errors and optimizing layout responsive breakpoints using Anthropic's Claude.
 
 ## 📦 Local Setup
-1. Clone the repository: `git clone https://github.com`
+1. Clone the repository: `git clone (https://github.com/Deshpande-Chinmay/nyt-connections-helpe)`
 2. Open the project folder
 3. Open `index.html` in your web browser to run the application locally.
