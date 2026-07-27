@@ -2,7 +2,7 @@
 
 An interactive NYT Connections helper designed to optimize puzzle solving and maximize reverse rainbow streaks.
 
-🔗 **[Live Demo Hosted on Vercel](https://nyt-connections-helper.vercel.app/)**
+🔗 **[Website Hosted on Vercel](https://nyt-connections-helper.vercel.app/)**
 
 ## 🚀 Overview
 As an incoming college student and regular NYT Connections player, I wanted to build a tool that helps users visualize word relationships & groups without ruining their in-game streaks. This project was built using AI-assisted development with Anthropic's Claude.
