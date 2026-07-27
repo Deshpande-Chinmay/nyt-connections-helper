@@ -15,6 +15,11 @@ const STORAGE_KEY = IS_MOBILE
   ? 'nyt_connections_tiles_mobile_v1'
   : 'nyt_connections_tiles_v3';
 
+// ── Custom proxy (set this after deploying your Cloudflare Worker) ──
+// Paste your worker URL here, e.g. 'https://nyt-connections-proxy.yourname.workers.dev'
+// Leave empty ('') to use public proxies only.
+const CUSTOM_PROXY_URL = 'https://connections-helper-proxy.deshpande-chinmay.workers.dev';
+
 // ── Demo puzzle ────────────────────────────────────────────
 const DEMO_PUZZLE = {
   print_date : 'Demo Puzzle',
@@ -522,7 +527,11 @@ async function fetchPuzzle() {
   const encoded  = encodeURIComponent(nytUrl);
 
   const endpoints = [
+    // Your Cloudflare Worker (fastest — tried first when set)
+    ...(CUSTOM_PROXY_URL ? [`${CUSTOM_PROXY_URL}?date=${date}`] : []),
+    // Direct NYT (works only if browser allows cross-origin)
     nytUrl,
+    // Public CORS proxies (fallback)
     `https://corsproxy.io/?${nytUrl}`,
     `https://api.allorigins.win/raw?url=${encoded}`,
     `https://api.codetabs.com/v1/proxy?quest=${nytUrl}`,
