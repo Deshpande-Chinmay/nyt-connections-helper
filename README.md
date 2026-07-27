@@ -22,6 +22,6 @@ As an incoming college student and regular NYT Connections player, I wanted to b
 * **Code Review & Refactoring:** Debugging errors and optimizing layout responsive breakpoints using Anthropic's Claude.
 
 ## 📦 Local Setup
-1. Clone the repository: `git clone (https://github.com/Deshpande-Chinmay/nyt-connections-helpe)`
+1. Clone the repository: `git clone https://github.com/Deshpande-Chinmay/nyt-connections-helper`
 2. Open the project folder
 3. Open `index.html` in your web browser to run the application locally.
