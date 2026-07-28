@@ -235,6 +235,8 @@ const drag = {
   targetSlot  : null,
   pointerOffX : 0,
   pointerOffY : 0,
+  startX      : 0,   // for tap-vs-drag threshold
+  startY      : 0,
   didMove     : false,
 };
 
@@ -263,6 +265,7 @@ function clearSlotHighlights() {
 
 // ── Drag start ─────────────────────────────────────────────
 function dragStart(e, tile) {
+  if (drag.active) return;                              // block re-entry during snap animation
   if (e.button !== undefined && e.button !== 0) return;
   e.preventDefault();
 
@@ -300,8 +303,12 @@ function dragStart(e, tile) {
     targetSlot  : null,
     pointerOffX : e.clientX - rect.left,
     pointerOffY : e.clientY - rect.top,
+    startX      : e.clientX,
+    startY      : e.clientY,
     didMove     : false,
   });
+
+  document.body.style.touchAction = 'none'; // prevent page scroll while dragging
 
   // Highlight origin slot so user sees where they picked up from
   slot.classList.add('drag-over');
@@ -315,11 +322,18 @@ function dragStart(e, tile) {
 function onDragMove(e) {
   if (!drag.active) return;
   e.preventDefault();
-  drag.didMove = true;
 
-  // Ghost follows cursor freely
+  // Ghost always follows the pointer (instant visual feedback)
   drag.ghost.style.left = (e.clientX - drag.pointerOffX) + 'px';
   drag.ghost.style.top  = (e.clientY - drag.pointerOffY) + 'px';
+
+  // Only commit to a drag after 5 px movement — protects mobile taps
+  if (!drag.didMove) {
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+    if (Math.hypot(dx, dy) < 5) return;
+    drag.didMove = true;
+  }
 
   // Find slot under cursor (ghost is pointerEvents:none, so this works)
   const el   = document.elementFromPoint(e.clientX, e.clientY);
@@ -331,16 +345,27 @@ function onDragMove(e) {
   }
 }
 
-// ── Drag end / drop ────────────────────────────────────────
+// ── Drag end / drop ──────────────────────────────────
 function onDragEnd(e) {
   if (!drag.active) return;
+  drag.active = false; // block re-entry immediately (before the 210ms animation)
 
   document.removeEventListener('pointermove',   onDragMove);
   document.removeEventListener('pointerup',     onDragEnd);
   document.removeEventListener('pointercancel', onDragEnd);
   clearSlotHighlights();
+  document.body.style.touchAction = ''; // restore page scrolling
 
-  // ── Pure click (no movement) → apply colour ──────────────
+  // ── Cancelled (e.g. incoming call / system gesture on mobile) → abort ─
+  if (e.type === 'pointercancel') {
+    drag.ghost.remove();
+    drag.originSlot.appendChild(drag.tile);
+    drag.originSlot.classList.add('occupied');
+    resetDragState();
+    return;
+  }
+
+  // ── Pure tap (no movement beyond threshold) → apply colour ───
   if (!drag.didMove) {
     drag.originSlot.appendChild(drag.tile);
     drag.originSlot.classList.add('occupied');
@@ -371,22 +396,25 @@ function onDragEnd(e) {
   drag.ghost.style.left      = lr.left + 'px';
   drag.ghost.style.top       = lr.top  + 'px';
 
+  // Capture refs now — drag.active is false so a new drag could start during
+  // the 210ms snap; using locals keeps this closure self-contained.
+  const { tile, ghost, originSlot } = drag;
+
   // After snap animation completes, place real tile & clean up
   setTimeout(() => {
-    drag.ghost.remove();
+    ghost.remove();
 
     // Place dragged tile in landing slot
-    landSlot.appendChild(drag.tile);
+    landSlot.appendChild(tile);
     landSlot.classList.add('occupied');
 
     // If swap: place displaced tile in origin slot
     if (swapTile) {
-      drag.originSlot.appendChild(swapTile);
-      drag.originSlot.classList.add('occupied');
+      originSlot.appendChild(swapTile);
+      originSlot.classList.add('occupied');
     }
 
     saveState();
-    resetDragState();
   }, 210);
 }
 
@@ -397,6 +425,8 @@ function resetDragState() {
   drag.ghost       = null;
   drag.originSlot  = null;
   drag.targetSlot  = null;
+  drag.startX      = 0;
+  drag.startY      = 0;
   drag.didMove     = false;
 }
 
@@ -495,7 +525,7 @@ function renderPuzzle(data) {
 
 
 // ── Fetch helpers ──────────────────────────────────────────
-const PUZZLE_CACHE_KEY = 'nyt_connections_puzzle_data_v1';
+const PUZZLE_CACHE_KEY = 'nyt_connections_puzzle_data_v2';
 
 
 async function fetchWithTimeout(url, ms = 7000) {
