@@ -7,6 +7,7 @@ A simple visualizer for NYT Connections players to map out word categories witho
 ## Features
 * **Interactive Grid:** Move word tiles on the grid to try different groups, before finalizing in-game.
 * **Category Color-Coding:** Give each tile NYT Connections based colours and group them together.
+* **Wide Compatibility:** Tiles & grid function tailored for different kinds of devices.
 * **Edge Proxy Routing:** Uses a Cloudflare Worker proxy (`proxy-worker.js`) to cache grid data and load puzzles faster.
 
 ## Tools used
