@@ -4,15 +4,15 @@
    ============================================================ */
 
 // ── Grid constants ─────────────────────────────────────────
-const GRID_ROWS   = 4;
 const IS_MOBILE   = window.innerWidth <= 700;
 const GRID_COLS   = IS_MOBILE ? 4 : 8;
+const GRID_ROWS   = IS_MOBILE ? 8 : 4;   // mobile: 4 tile rows + 4 empty drag rows
 const TOTAL_SLOTS = GRID_COLS * GRID_ROWS;
 
 // ── Other constants ────────────────────────────────────────
 const COLOR_CYCLE = ['white', 'yellow', 'green', 'blue', 'purple'];
 const STORAGE_KEY = IS_MOBILE
-  ? 'nyt_connections_tiles_mobile_v1'
+  ? 'nyt_connections_tiles_mobile_v2'   // bumped: grid is now 4×8 not 4×4
   : 'nyt_connections_tiles_v3';
 
 // ── Custom proxy (set this after deploying your Cloudflare Worker) ──
